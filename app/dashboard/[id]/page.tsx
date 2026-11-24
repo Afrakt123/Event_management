@@ -2,13 +2,21 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import toast from "react-hot-toast";
 
 export default function EditEvent() {
+    return (
+        <Suspense fallback={<div>Loading event...</div>}>
+            <EditEventContent />
+        </Suspense>
+    );
+}
 
-    const params = useParams();
-    const id = params.id as string;
+function EditEventContent() {
+
+    const params = useParams<{ id: string }>();
+    const id = params.id;
     const router = useRouter();
 
     const [event, setEvent] = useState({
